@@ -11,6 +11,7 @@ const contactSchema = new Schema(
     },
     phone: {
       type: String,
+      required:[true, "You should enter at least 10 numbers"]
     },
     favorite: {
       type: Boolean,

@@ -16,6 +16,8 @@ router.post('/',  validate(contactSchema), wrapper(contactsController.addContact
 
 router.delete('/:id', validate(contactSchema), wrapper(contactsController.removeContact))
 
+router.patch("/:id/favorite", validate(contactSchema.updateFavoriteSchema), wrapper(booksController.updateFavorite))
+
 router.put('/:id', wrapper(contactsController.updateById))
 
 module.exports = router;
