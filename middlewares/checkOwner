@@ -1,0 +1,20 @@
+const { Contact } = require("../models/contacts");
+const { reqError } = require("../helpers/reqError");
+
+const checkOwner = async (req, res, next) => {
+  const { _id: userId } = req.user;
+  const { contactId } = req.params;
+
+  const contact = await Contact.findById(contactId);
+  if (!contact) {
+    throw reqError(404, "Contact not found");
+  }
+  const ownerIdNormalized = contact.owner.toString();
+  const userIdNormalised = userId.toString();
+
+  if (ownerIdNormalized !== userIdNormalised) {
+    throw reqError(403, "Access denied");
+  }
+  next();
+};
+module.exports = checkOwner;

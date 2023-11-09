@@ -1,13 +1,13 @@
-const joi = require('joi')
+const Joi = require('joi')
 
-const contactSchema = joi.object({
-  name: joi.string().required(),
-  phone: joi.number().min(10),
-  email: joi.string().required(),
+const contactSchema = Joi.object({
+  name: Joi.string().required(),
+  email: Joi.string().email().required(),
+  phone: Joi.number().min(10),
 });
 
-const updateFavoriteSchema = joi.object({
-  favorite: joi.boolean().required(),
+const updateFavoriteSchema = Joi.object({
+  favorite: Joi.boolean().required(),
 });
 
 module.exports = { contactSchema, updateFavoriteSchema };
