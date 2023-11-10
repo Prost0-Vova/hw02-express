@@ -1,4 +1,4 @@
-const controllerWrapper = controller => {
+const wrapper = controller => {
 const func = async (req, res, next) => {
    try{
    await controller(req, res, next)
@@ -12,4 +12,4 @@ return func;
 
 }
 
-module.exports = controllerWrapper;
+module.exports = wrapper;

@@ -1,22 +1,22 @@
-const contacts = require('../../models/contacts')
+
 const contactsController = require('../../controllers/contacts')
 const wrapper = require('../../helpers/controllerWrapper')
-const contactSchema = require('../../schemas/contacts')
-const validate = require("../../middlewares/validationMiddleware")
+const schema = require('../../schemas/contacts')
+const {validationMiddleware} = require("../../middlewares")
 const express = require('express')
 const router = express.Router()
-
+const {checkOwner} = require("../../middlewares")
 
 
 router.get('/', wrapper(contactsController.listContacts))
 
-router.get('/:id', wrapper(contactsController.getContactById))
+router.get('/:id', wrapper(checkOwner), contactsController.getContactById)
 
-router.post('/',  validate(contactSchema), wrapper(contactsController.addContact))
+router.post('/',   wrapper(checkOwner), contactsController.addContact)
 
-router.delete('/:id', validate(contactSchema), wrapper(contactsController.removeContact))
+router.delete('/:id', validationMiddleware(schema.contactSchema), wrapper(checkOwner), contactsController.removeContact)
 
-router.patch("/:id/favorite", validate(contactSchema.updateFavoriteSchema), wrapper(booksController.updateFavorite))
+router.patch("/:id/favorite", validationMiddleware(schema.updateFavoriteSchema), wrapper(checkOwner), contactsController.updateFavorite)
 
 router.put('/:id', wrapper(contactsController.updateById))
 
