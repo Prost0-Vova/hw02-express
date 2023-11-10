@@ -1,6 +1,6 @@
-const User = require('../../models/user')
+const { User } = require('../../models/user')
 const bcrypt = require('bcrypt')
-const requestError = require('../../helpers/reqError')
+const { reqError } = require('../../helpers')
 const jwt = require("jsonwebtoken");
 
 
@@ -12,13 +12,13 @@ const login = async (req, res, next) => {
     const user = await User.findOne({ email })
 
     if (!user) {
-        throw requestError(401, "Email is not valid")
+        throw reqError(401, "Email is not valid")
     }
 
     const isMatch = await bcrypt.compare(password, user.password)
 
     if (!isMatch) {
-        throw requestError(401, "Password is not valid")
+        throw reqError(401, "Password is not valid")
     }
     
     const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: "1h" });

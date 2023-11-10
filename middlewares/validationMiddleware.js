@@ -1,10 +1,10 @@
-const requestError = require('../helpers/reqError')
+const {reqError} = require('../helpers')
 
 const validationMiddleware = schema => {
     const func = (req, res, next) => {
         const {error} = schema.validate(req.body)
         if (error) {
-            next(requestError(400, error.message))
+            next(reqError(400, error.message))
         }
 
         next()
