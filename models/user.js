@@ -11,6 +11,10 @@ const userSchema = new Schema(
       minlength: 3,
       required: true,
     },
+    avatarURL: {
+      type: String,
+      require: true,
+    },
     password: {
       type: String,
       minlength: 6,
@@ -45,10 +49,12 @@ const registerSchema = Joi.object({
   email: Joi.string().pattern(emailRegexp).required(),
   password: Joi.string().min(6),
   subscription: Joi.string().valid("starter", "pro", "business"),
+  avatarURL: Joi.string(),
 });
 const loginSchema = Joi.object({
   email: Joi.string().pattern(emailRegexp).required(),
   password: Joi.string().min(6).required(),
+  avatarURL: Joi.string(),
 });
 const updateSchema = Joi.object({
   name: Joi.string().min(3),
