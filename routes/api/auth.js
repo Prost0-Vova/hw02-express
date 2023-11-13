@@ -27,5 +27,13 @@ router.post(
     upload.single("avatar")
     
   );
+
+  router.get("/verify/:verificationToken", auth.verifyEmail);
+
+router.post(
+  "/verify",
+  isValidBody(schemas.emailSchema),
+  auth.resendVerifyEmail
+);
   
   module.exports = router;
